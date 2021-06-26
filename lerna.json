@@ -13,6 +13,7 @@
     "packages/ledger",
     "packages/ledger-ethereum",
     "packages/ledger-qldb",
+    "packages/ledger-sirius",
     "packages/test-vectors",
     "packages/wallet"
   ],
