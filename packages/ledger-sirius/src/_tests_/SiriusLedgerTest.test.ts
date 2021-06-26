@@ -1,4 +1,3 @@
-
 import { SiriusLedger } from '../SiriusLedger';
 import { SiriusDriver } from '../SiriusDriver';
 import testSuite from './TestSuite';

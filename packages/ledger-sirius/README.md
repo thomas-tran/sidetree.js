@@ -1,17 +1,17 @@
-# @sidetree/XPX
+# @sidetree/sirius
 
-This package contains an implementation of the Sidetree ledger interface on the XPX ledger. It passes the test suite defined in `@sidetree/ledger`.
+This package contains an implementation of the Sidetree ledger interface on the Sirius ledger. It passes the test suite defined in `@sidetree/ledger`.
 
-Setup XPX ledger
+Setup Sirius ledger
 
-## Setup XPX ledger
+## Setup Sirius ledger
 
 
 
 ## Usage
 
 ```
-npm install --save @sidetree/XPX
+npm install --save @sidetree/sirius
 ```
 
 ## Development
