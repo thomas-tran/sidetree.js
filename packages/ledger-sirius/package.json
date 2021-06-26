@@ -8,7 +8,7 @@
     "Thomas Tran (https://github.com/thomas-tran)"
   ],
   "module": "dist/sirius.esm.js",
-  "version": "0.2.6-unstable.2",
+  "version": "0.2.6-unstable.4",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -24,13 +24,13 @@
     "prepare": "tsdx build"
   },
   "devDependencies": {
-    "@sidetree/ledger": "^0.2.6-unstable.2",
+    "@sidetree/ledger": "^0.2.6-unstable.4",
     "tsdx": "^0.14.1"
   },
   "dependencies": {
-    "@sidetree/common": "^0.2.6-unstable.2",
-    "@sidetree/core": "^0.2.6-unstable.2",
-    "@sidetree/test-vectors": "^0.2.6-unstable.2",
+    "@sidetree/common": "^0.2.6-unstable.4",
+    "@sidetree/core": "^0.2.6-unstable.4",
+    "@sidetree/test-vectors": "^0.2.6-unstable.4",
     "moment": "^2.29.1",
     "rxjs": "^6.5.4",
     "tsjs-xpx-chain-sdk": "^0.8.1"
