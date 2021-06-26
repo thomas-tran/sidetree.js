@@ -31,7 +31,7 @@ export class SiriusDriver {
   private transactionHttp: TransactionHttp;
   private accountHttp: AccountHttp;
   private options: SiriusOptions;
-  private account: Account;
+  private providerAccount: Account;
 
   constructor(
     public providerUrl: string,
@@ -44,7 +44,10 @@ export class SiriusDriver {
     this.chainHttp = new ChainHttp(providerUrl);
     this.accountHttp = new AccountHttp(providerUrl);
     this.transactionHttp = new TransactionHttp(providerUrl);
-    this.account = Account.createFromPrivateKey(accountPrivateKey, networkType);
+    this.providerAccount = Account.createFromPrivateKey(
+      accountPrivateKey,
+      networkType
+    );
     this.options = options || {
       mosaicHex: '13bfc518e40549d7',
       feeCalculationStrategy: FeeCalculationStrategy.ZeroFeeCalculationStrategy,
@@ -53,7 +56,7 @@ export class SiriusDriver {
   }
 
   public getProviderAccount(): Account {
-    return this.account;
+    return this.providerAccount;
   }
 
   public async getCurrentBlock(): Promise<BlockInfo> {
@@ -83,7 +86,7 @@ export class SiriusDriver {
     return this.signAndAnnounceTransaction(
       JSON.stringify(payload),
       fee,
-      this.account,
+      this.providerAccount,
       this.recipientPublicAccount
     );
   }

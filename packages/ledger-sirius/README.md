@@ -4,10 +4,6 @@ This package contains an implementation of the Sidetree ledger interface on the 
 
 Setup Sirius ledger
 
-## Setup Sirius ledger
-
-
-
 ## Usage
 
 ```

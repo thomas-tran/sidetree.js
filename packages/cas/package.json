@@ -32,7 +32,7 @@
     "ipfs-unixfs": "^2.0.3",
     "ipld-dag-pb": "^0.20.0"
   },
-  "gitHead": "0c6ea3d3220464cf3975345eb6805b25bc823b0d",
+  "gitHead": "4b291f044252e42fbbf92a73eb16e1f0bb9eb347",
   "homepage": "https://github.com/transmute-industries/sidetree.js/tree/main/packages/cas",
   "repository": {
     "type": "git",

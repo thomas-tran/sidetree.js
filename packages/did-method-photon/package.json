@@ -43,5 +43,6 @@
     "type": "git",
     "url": "https://github.com/transmute-industries/sidetree.js.git",
     "directory": "packages/did-method-photon"
-  }
+  },
+  "gitHead": "4b291f044252e42fbbf92a73eb16e1f0bb9eb347"
 }
