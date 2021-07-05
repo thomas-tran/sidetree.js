@@ -1,0 +1,100 @@
+{
+  "resolution": [
+    {
+      "status": "succeeded",
+      "body": {
+        "@context": "https://w3id.org/did-resolution/v1",
+        "didDocument": {
+          "id": "did:sirius:EiDjQYg7Q2pwgj4BQCEnq7yZrY9YEWbg6toqbQQPPW6jaA",
+          "@context": [
+            "https://www.w3.org/ns/did/v1",
+            "https://ns.did.ai/transmute/v1",
+            {
+              "@base": "did:sirius:EiDjQYg7Q2pwgj4BQCEnq7yZrY9YEWbg6toqbQQPPW6jaA"
+            }
+          ],
+          "service": [
+            {
+              "id": "#serviceEndpointId123",
+              "type": "someType",
+              "serviceEndpoint": "https://www.url.com"
+            }
+          ],
+          "publicKey": [
+            {
+              "id": "#key-1",
+              "controller": "did:sirius:EiDjQYg7Q2pwgj4BQCEnq7yZrY9YEWbg6toqbQQPPW6jaA",
+              "type": "JsonWebKey2020",
+              "publicKeyJwk": {
+                "crv": "Ed25519",
+                "x": "YdhXF2sPMUo99gS4MVIcRym1A5Z1hlDh6DKt0PrYt_0",
+                "kty": "OKP"
+              }
+            },
+            {
+              "id": "#additional-key",
+              "controller": "did:sirius:EiDjQYg7Q2pwgj4BQCEnq7yZrY9YEWbg6toqbQQPPW6jaA",
+              "type": "JsonWebKey2020",
+              "publicKeyJwk": {
+                "crv": "Ed25519",
+                "x": "tUXOTSIeVvVrckMjtFsXE2kdCfTzl1dp1nsGUUg2CMU",
+                "kty": "OKP"
+              }
+            }
+          ],
+          "authentication": ["#key-1", "#additional-key"]
+        },
+        "didDocumentMetadata": {
+          "recoveryCommitment": "EiAOtRKnQyc3y3FzQn6h0RcNG75BFEOk4_1zZrAoZbY7OQ",
+          "updateCommitment": "EiDsIwQ4P04U5FeBoRJ8kq1BJLk_RlC8REiu8GjghOPS2A"
+        }
+      }
+    },
+    {
+      "status": "succeeded",
+      "body": {
+        "@context": "https://w3id.org/did-resolution/v1",
+        "didDocument": {
+          "id": "did:sirius:EiDjQYg7Q2pwgj4BQCEnq7yZrY9YEWbg6toqbQQPPW6jaA",
+          "@context": [
+            "https://www.w3.org/ns/did/v1",
+            "https://ns.did.ai/transmute/v1",
+            {
+              "@base": "did:sirius:EiDjQYg7Q2pwgj4BQCEnq7yZrY9YEWbg6toqbQQPPW6jaA"
+            }
+          ],
+          "service": [
+            {
+              "id": "#recoveredServiceEndpoint456",
+              "type": "someType",
+              "serviceEndpoint": "https://www.url.com"
+            }
+          ],
+          "publicKey": [
+            {
+              "id": "#newKey",
+              "controller": "did:sirius:EiDjQYg7Q2pwgj4BQCEnq7yZrY9YEWbg6toqbQQPPW6jaA",
+              "type": "JsonWebKey2020",
+              "publicKeyJwk": {
+                "crv": "Ed25519",
+                "x": "3OKY5Om3215hnfHgEKCaklCRvnT6gpZWr0VQiQEgU2I",
+                "kty": "OKP"
+              }
+            }
+          ],
+          "authentication": ["#newKey"]
+        },
+        "didDocumentMetadata": {
+          "recoveryCommitment": "EiBDLBZSe8LkUcNlUWvPZafj2FU29TbV7IWu5bfaFRo-mw",
+          "updateCommitment": "EiBqKyksiHilk-fj_Rgm4tT6V0JU32Q1QZ7ivweMB0BhVA"
+        }
+      }
+    },
+    {
+      "status": "succeeded",
+      "body": {
+        "status": "deactivated"
+      }
+    }
+  ]
+}

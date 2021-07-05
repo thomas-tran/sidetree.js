@@ -14,7 +14,7 @@ const siriusDriver = new SiriusDriver(
   siriusChainGatewayUrl,
   siriusChainGatewayNetwork,
   providerAccountPK,
-  anchoringAccount.publicAccount
+  anchoringAccount.publicKey
 );
 
 const ledger = new SiriusLedger(siriusDriver);

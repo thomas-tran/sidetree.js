@@ -20,3 +20,5 @@ export interface AnchorTransaction {
   transferTransaction: TransferTransaction;
   block: BlockInfo;
 }
+
+declare module 'tsjs-xpx-chain-sdk';

@@ -1,5 +1,5 @@
 {
-  "name": "@sidetree/sirius",
+  "name": "@sidetree/sirius-ledger",
   "publishConfig": {
     "access": "public"
   },
@@ -7,7 +7,7 @@
   "contributors": [
     "Thomas Tran (https://github.com/thomas-tran)"
   ],
-  "module": "dist/sirius.esm.js",
+  "module": "dist/sirius-ledger.esm.js",
   "version": "0.2.6-unstable.4",
   "license": "Apache-2.0",
   "main": "dist/index.js",

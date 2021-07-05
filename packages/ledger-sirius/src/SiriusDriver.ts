@@ -32,12 +32,12 @@ export class SiriusDriver {
   private accountHttp: AccountHttp;
   private options: SiriusOptions;
   private providerAccount: Account;
-
+  private recipientPublicAccount: PublicAccount;
   constructor(
     public providerUrl: string,
     public networkType: number,
     public accountPrivateKey: string,
-    public recipientPublicAccount: PublicAccount,
+    public recipientPublicKey: string,
     options?: SiriusOptions
   ) {
     this.blockHttp = new BlockHttp(providerUrl);
@@ -52,7 +52,10 @@ export class SiriusDriver {
       mosaicHex: '13bfc518e40549d7',
       feeCalculationStrategy: FeeCalculationStrategy.ZeroFeeCalculationStrategy,
     };
-    this.recipientPublicAccount = recipientPublicAccount;
+    this.recipientPublicAccount = PublicAccount.createFromPublicKey(
+      recipientPublicKey,
+      networkType
+    );
   }
 
   public getProviderAccount(): Account {

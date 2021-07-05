@@ -19,7 +19,7 @@ const sidetreeUniversalWallet = require('./sidetree-universal-wallet');
 const sidetreeCoreGeneratedSecp256k1 = require('./core-generated-secp256k1');
 const sidetreeCoreGeneratedEd25519 = require('./core-generated-ed25519');
 const didMethodElement = require('./did-method-element');
-
+const didMethodSirius = require('./did-method-sirius');
 module.exports = {
   testVectors,
   filesystem,
@@ -28,4 +28,5 @@ module.exports = {
   sidetreeCoreGeneratedSecp256k1,
   sidetreeCoreGeneratedEd25519,
   didMethodElement,
+  didMethodSirius,
 };
