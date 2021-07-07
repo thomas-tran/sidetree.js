@@ -16,6 +16,7 @@ This codebase is a [Lerna monorepo](https://github.com/lerna/lerna).
 | did:elem  | [spec](https://github.com/transmute-industries/sidetree.js/tree/main/packages/did-method-element#element-did-method-specification) | Ethereum  |
 | did:photon  | [spec](https://github.com/transmute-industries/sidetree.js/tree/main/packages/did-method-photon#photon-did-method-spec) | Amazon QLDB  |
 | did:trustbloc  | [spec](https://github.com/trustbloc/trustbloc-did-method/blob/master/docs/spec/trustbloc-did-method.md) | Hyperledger Fabric  |
+| did:sirius  | [spec](https://github.com/thomas-tran/sidetree.js/tree/main/packages/did-method-sirius#sirius-did-method-spec) | SiriusID  |
 
 ## Usage
 
