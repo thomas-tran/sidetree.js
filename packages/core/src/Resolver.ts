@@ -47,6 +47,8 @@ export default class Resolver {
     const operations = await this.operationStore.get(didUniqueSuffix);
     const operationsByType = Resolver.categorizeOperationsByType(operations);
 
+    console.debug(`Get operation '${operations}'...`);
+
     // Find and apply a valid create operation.
     let didState = await this.applyCreateOperation(
       operationsByType.createOperations

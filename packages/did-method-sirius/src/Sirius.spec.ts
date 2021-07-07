@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-commented-out-tests */
 import Sirius from './Sirius';
 import { ICas } from '@sidetree/common';
 import { SiriusLedger } from '@sidetree/sirius-ledger';
@@ -6,6 +7,7 @@ import { resetDatabase, getTestLedger, getTestCas } from './test/utils';
 import config from './test/sirius-config.json';
 
 console.info = (): null => null;
+jest.setTimeout(60 * 20000);
 
 describe('Sirius', () => {
   let ledger: SiriusLedger;
@@ -48,13 +50,17 @@ describe('Sirius', () => {
     const operation = await sirius.handleOperationRequest(
       Buffer.from(JSON.stringify(testVectors.create.createRequest))
     );
+    await new Promise((resolve) => {
+      return setTimeout(resolve, 60000);
+    });
+    console.log(operation.body);
     expect(operation.status).toBe('succeeded');
     expect(operation.body).toBeDefined();
   });
 
   it('should resolve a did after Observer has picked up the transaction', async () => {
     await sirius.triggerBatchAndObserve();
-    const did = 'did:elem:EiBFsUlzmZ3zJtSFeQKwJNtngjmB51ehMWWDuptf9b4Bag';
+    const did = 'did:sirius:EiBFsUlzmZ3zJtSFeQKwJNtngjmB51ehMWWDuptf9b4Bag';
     const operation = await sirius.handleResolveRequest(did);
     expect(operation.status).toBe('succeeded');
     expect(operation.body.didDocument.id).toEqual(did);

@@ -27,7 +27,7 @@ const resetDatabase = async () => {
 };
 
 const anchoringAccount = Account.generateNewAccount(NetworkType.TEST_NET);
-
+console.log(anchoringAccount.privateKey);
 const getTestLedger = async () => {
   const siriusDriver = new SiriusDriver(
     config.siriusChainGatewayUrl,

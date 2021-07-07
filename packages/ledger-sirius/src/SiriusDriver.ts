@@ -115,7 +115,7 @@ export class SiriusDriver {
     const networkType = nemesisBlock.networkType;
 
     const message = PlainMessage.create(payload);
-
+    console.debug(`Payload  ${payload}`);
     const builder = new TransferTransactionBuilder()
       .deadline(Deadline.create())
       .generationHash(generationHash)
@@ -133,7 +133,7 @@ export class SiriusDriver {
     const tx = builder.build();
 
     const signedTx = sender.sign(tx, generationHash);
-
+    console.debug(`Announing signed tx ${signedTx}`);
     await this.transactionHttp.announce(signedTx).toPromise();
 
     return signedTx;

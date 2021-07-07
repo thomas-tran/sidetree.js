@@ -202,9 +202,10 @@ export default class RequestHandler implements IRequestHandler {
       console.info(`Handling resolution request for: ${shortOrLongFormDid}...`);
 
       const did = await Did.create(shortOrLongFormDid, this.didMethodName);
-
+      console.debug(`Resolve did ${did}`);
       let didState: DidState | undefined;
       if (did.isShortForm) {
+        console.debug(`Resolve did ${JSON.stringify(did)}`);
         didState = await this.resolver.resolve(did.uniqueSuffix);
       } else {
         didState = await this.resolveLongFormDid(did);
