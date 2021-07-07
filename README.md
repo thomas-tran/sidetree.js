@@ -29,7 +29,7 @@ npm install
 To install a specific package (and its dependencies) run
 
 ```bash
-npm run install:only @sidetree/photon
+npm run install:only @sidetree/sirius
 ```
 
 To run tests in every packages run
@@ -41,14 +41,14 @@ npm run test
 To test a specific package run
 
 ```bash
-npm run test:only @sidetree/photon
+npm run test:only @sidetree/sirius
 ```
 
 ## Services
 
 We use docker-compose to setup the services used in tests, Namely:
 
-- ganache: for a local ethereum testnet
+- sirius: for local sirius chain testnet
 - ipfs: for a local ipfs node
 - mongodb: for a local mongo DB
 
