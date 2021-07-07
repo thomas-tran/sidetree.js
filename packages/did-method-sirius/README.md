@@ -1,11 +1,11 @@
 # @sidetree/element
 
-This package contains an implementation of Sidetree Core, using Ethereum and IPFS
+This package contains an implementation of Sidetree Core, using Sirius Chain and IPFS
 
 ## Usage
 
 ```
-npm install --save @sidetree/element
+npm install --save @sidetree/sirius
 ```
 
 ## Development
@@ -15,27 +15,28 @@ npm install
 npm run test
 ```
 
-## Element DID Method Specification
+## SiriusID DID Method Specification
 
-Element is an implementation of the Sidetree Protocol that uses the Ethereum blockchain as the ledger layer and IPFS as the content-addressable storage layer
+SiriusID is an implementation of the Sidetree Protocol that uses the Sirius Chain blockchain as the ledger layer and IPFS as the content-addressable storage layer
 
 For more information, see [the sidetree spec](https://identity.foundation/sidetree/spec/)
 
 ## Method syntax
 
-The namestring identifying this did method is `elem`
+The namestring identifying this did method is `sirius`
 
-A DID that uses this method MUST begin with the following prefix: `did:elem`. Per the DID specification, this string MUST be in lowercase.
+A DID that uses this method MUST begin with the following prefix: `did:sirius`. Per the DID specification, this string MUST be in lowercase.
 
 An additional optional network specific identifier may be added as such
-- `did:elem:ropsten:EiBOWH8368BI9NSaVZTmtxuqwpfN9NwAwy4Z95_VCl6A9g`
-- `did:elem:mainnet:EiBOWH8368BI9NSaVZTmtxuqwpfN9NwAwy4Z95_VCl6A9g`
-- `did:elem:EiBOWH8368BI9NSaVZTmtxuqwpfN9NwAwy4Z95_VCl6A9g`
+- `did:sirius:testnet:EiBOWH8368BI9NSaVZTmtxuqwpfN9NwAwy4Z95_VCl6A9g`
+- `did:sirius:mainnet:EiBOWH8368BI9NSaVZTmtxuqwpfN9NwAwy4Z95_VCl6A9g`
+- `did:sirius:EiBOWH8368BI9NSaVZTmtxuqwpfN9NwAwy4Z95_VCl6A9g`
 
-By default, if the network specific identifier is not present, then the default is `ropsten`.
+By default, if the network specific identifier is not present, then the default is `testnet`.
 The default may change in the future once `mainnet` is supported.
 
 The remainder of a DID after the prefix, called the did unique suffix, MUST be `SHA256` hash of the encoded create payload (see below)
+
 
 ## Format and Encoding
 
