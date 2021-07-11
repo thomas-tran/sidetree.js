@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 /*
  * Copyright 2020 - Transmute Industries Inc.
  *

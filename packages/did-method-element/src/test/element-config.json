@@ -3,7 +3,7 @@
   "databaseName": "element-test",
   "didMethodName": "elem",
   "ethereumRpcUrl": "http://localhost:8545",
-  "mongoDbConnectionString": "mongodb://localhost:27017/",
+  "mongoDbConnectionString": "mongodb://localhost:27019/",
   "batchingIntervalInSeconds": 5,
   "observingIntervalInSeconds": 5,
   "maxConcurrentDownloads": 20,

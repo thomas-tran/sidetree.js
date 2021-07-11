@@ -3,7 +3,7 @@
   "databaseName": "photon-test",
   "qldbLedger": "photon-test",
   "qldbLedgerTable": "Test",
-  "mongoDbConnectionString": "mongodb://localhost:27017/",
+  "mongoDbConnectionString": "mongodb://localhost:27019/",
   "didMethodName": "photon",
   "batchingIntervalInSeconds": 5,
   "observingIntervalInSeconds": 5,

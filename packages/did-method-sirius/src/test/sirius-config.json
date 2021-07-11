@@ -6,7 +6,7 @@
   "siriusChainGatewayNetwork":168,
   "providerAccountPrivateKey": "44BAD12E749DF4260917418A581F84522DE21F2CE6C2A3C346B1111E65C05330",
   "anchoringAccountPublicKey": "4D80F48E9075F4897078AB7A251AA6E8F651BB7F007EAD92D49DD7816BC5939C",
-  "mongoDbConnectionString": "mongodb://localhost:27017/",
+  "mongoDbConnectionString": "mongodb://localhost:27019/",
   "batchingIntervalInSeconds": 5,
   "observingIntervalInSeconds": 10,
   "maxConcurrentDownloads": 20,

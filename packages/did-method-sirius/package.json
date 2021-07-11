@@ -22,7 +22,7 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
-    "pretest": "docker-compose up -d mongo ipfs",
+    "pretest3": "docker-compose up -d mongo ipfs",
     "test": "tsdx test --runInBand",
     "lint": "tsdx lint src",
     "lint:fix": "tsdx lint src --fix",

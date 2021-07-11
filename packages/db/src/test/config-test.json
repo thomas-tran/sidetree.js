@@ -1,4 +1,4 @@
 {
-  "mongoDbConnectionString": "mongodb://localhost:27017/",
+  "mongoDbConnectionString": "mongodb://localhost:27019/",
   "databaseName": "mongo-test"
 }
