@@ -53,6 +53,7 @@ const eventLogToSidetreeTransaction = (
     ),
     numberOfOperations: Number.parseInt(log.returnValues.numberOfOperations),
   };
+  console.log(`My anchor data ${anchoredData.anchorFileHash}`);
   const anchorString = AnchoredDataSerializer.serialize(anchoredData);
   return {
     transactionNumber: Number.parseInt(log.returnValues.transactionNumber, 10),

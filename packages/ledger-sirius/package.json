@@ -33,7 +33,8 @@
     "@sidetree/test-vectors": "^0.2.6-unstable.4",
     "moment": "^2.29.1",
     "rxjs": "^6.5.4",
-    "tsjs-xpx-chain-sdk": "^0.8.1"
+    "multihashes": "^0.4.19",
+    "tsjs-xpx-chain-sdk": "^0.8.2"
   },
   "homepage": "https://github.com/transmute-industries/sidetree.js/tree/main/packages/ledger-sirius",
   "repository": {

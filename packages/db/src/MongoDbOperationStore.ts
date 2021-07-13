@@ -52,6 +52,7 @@ export default class MongoDbOperationStore extends MongoDbBase
     const onlyNewElements: AnchoredOperationModel[] = [];
     for (const operation of operationsWithoutDuplicates) {
       const anchoredOperation: AnchoredOperationModel = operation;
+      console.debug(`My anchor operation ${JSON.stringify(operation)}`);
       const res = await this.get(anchoredOperation.didUniqueSuffix);
       const isDuplicated = res.find(
         (op) =>
@@ -68,6 +69,9 @@ export default class MongoDbOperationStore extends MongoDbBase
   }
 
   public async get(didUniqueSuffix: string): Promise<AnchoredOperationModel[]> {
+    const all = await this.collection!.find().toArray();
+    console.debug(`All collection ${JSON.stringify(all)}`);
+
     const results = await this.collection!.find({
       didUniqueSuffix,
     }).toArray();

@@ -42,7 +42,7 @@ export default class Resolver {
    * @returns Final DID state of the DID. Undefined if the unique suffix of the DID is not found or the DID state is not constructable.
    */
   public async resolve(didUniqueSuffix: string): Promise<DidState | undefined> {
-    console.info(`Resolving DID unique suffix '${didUniqueSuffix}'...`);
+    console.debug(`Resolving DID unique suffix '${didUniqueSuffix}'...`);
 
     const operations = await this.operationStore.get(didUniqueSuffix);
     const operationsByType = Resolver.categorizeOperationsByType(operations);

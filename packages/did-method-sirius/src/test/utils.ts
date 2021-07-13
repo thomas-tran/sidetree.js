@@ -5,13 +5,15 @@ import path from 'path';
 
 import { MongoDb } from '@sidetree/db';
 
-// import { IpfsCasWithCache } from '@sidetree/cas-ipfs';
+//import { IpfsCasWithCache } from '@sidetree/cas-ipfs';
 import { MockCas } from '@sidetree/cas';
 import Sirius from '../Sirius';
 import { SiriusDriver, SiriusLedger } from '@sidetree/sirius-ledger';
 import { Account, NetworkType } from 'tsjs-xpx-chain-sdk';
 import config from './sirius-config.json';
-
+import { methods } from '@sidetree/wallet';
+import { Encoder } from '@sidetree/common';
+import { PublicKeyPurpose } from '@sidetree/common';
 const writeFixture = (filename: string, object: never): void => {
   fs.writeFileSync(
     path.resolve(__dirname, '../__fixtures__/', filename),
@@ -44,17 +46,17 @@ const getTestLedger = async () => {
 const getTestCas = async () => {
   // FIXME: IPFS has intermittent failures in tests so we will use MockCas until it's fixed
   // See: https://github.com/transmute-industries/sidetree.js/runs/2178633982#step:8:178
-  // const cas = new IpfsCasWithCache(
-  //   config.contentAddressableStoreServiceUri,
-  //   config.mongoDbConnectionString,
-  //   config.databaseName
-  // );
+  /*const cas = new IpfsCasWithCache(
+    config.contentAddressableStoreServiceUri,
+    config.mongoDbConnectionString,
+    config.databaseName
+  );*/
   const cas = new MockCas();
   return cas;
 };
 
 const getTestSirius = async () => {
-  resetDatabase();
+  await resetDatabase();
   const ledger = await getTestLedger();
   const cas = await getTestCas();
 
@@ -64,26 +66,51 @@ const getTestSirius = async () => {
 };
 
 const replaceMethod = (
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  result: any,
-  defaultMethod = 'sidetree',
-  specificMethod = 'sirius'
-): any => {
-  // prevent mutation
-  const _result = JSON.parse(JSON.stringify(result));
-  _result.didDocument.id = _result.didDocument.id.replace(
-    specificMethod,
-    defaultMethod
+  result: JSON,
+  defaultMethod = 'did:elem',
+  specificMethod = 'did:sirius'
+): JSON => {
+  const stringified = JSON.stringify(result);
+  const updatedStringified = stringified.replace(
+    new RegExp(defaultMethod, 'g'),
+    specificMethod
   );
-  // upstream sidetree sets controller incorrectly.
-  _result.didDocument.publicKey[0].controller = '';
-  if (_result.didDocument.publicKey[1]) {
-    _result.didDocument.publicKey[1].controller = '';
-  }
-  _result.didDocument['@context'][2]['@base'] = _result.didDocument[
-    '@context'
-  ][2]['@base'].replace(specificMethod, defaultMethod);
-  return _result;
+  const updateResult = JSON.parse(updatedStringified);
+  return updateResult;
+};
+
+export const generateCreateOperation = async (publicKey: any): Promise<any> => {
+  // We could generate the create operation like this
+  /*
+  const mnemonic = crypto.mnemonic.mnemonic[0];
+  const createOperation = await methods.getCreateOperationForProfile(
+    mnemonic,
+    i
+  );
+  */
+  // However this is too slow because it generates new keys for every create
+  // operation which cause the tests to timeout for batch size larger than 1000
+
+  // Therefore for the purpose of showing the we can process large batches
+  // we will generate create operation for did documents that share the same key
+  const documentModel = {
+    public_keys: [
+      {
+        // id is random so that each id (and therefore each did) is different
+        // id needs to be base64url encoded
+        id: Encoder.encode(Math.random().toString()),
+        type: 'JsonWebKey2020',
+        jwk: publicKey,
+        purpose: [PublicKeyPurpose.General],
+      },
+    ],
+  };
+  const createOperation = await methods.getCreatePayloadFromDocumentModel(
+    documentModel,
+    publicKey,
+    publicKey
+  );
+  return createOperation;
 };
 
 export {

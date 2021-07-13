@@ -200,6 +200,7 @@ export default class DidMethod {
     const requestHandler = this.versionManager.getRequestHandler(
       currentTime.time
     );
+    console.debug(`request handler ${requestHandler}`);
     const response = requestHandler.handleResolveRequest(didOrDidDocument);
     return response;
   }

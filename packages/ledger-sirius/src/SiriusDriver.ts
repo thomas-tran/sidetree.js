@@ -5,7 +5,6 @@ import {
   SignedTransaction,
   Account,
   PlainMessage,
-  TransferTransactionBuilder,
   Deadline,
   FeeCalculationStrategy,
   Mosaic,
@@ -15,15 +14,24 @@ import {
   TransferTransaction,
   AccountHttp,
   TransactionType,
-  Transaction,
   MessageType,
   PublicAccount,
+  TransactionBuilderFactory,
+  QueryParams,
 } from 'tsjs-xpx-chain-sdk';
 
-import { concatMap, filter, toArray, mergeAll, map } from 'rxjs/operators';
+import {
+  concatMap,
+  filter,
+  toArray,
+  mergeAll,
+  map,
+  expand,
+} from 'rxjs/operators';
 
 import { AnchoredDataSerializer, TransactionModel } from '@sidetree/common';
-import { SiriusOptions, AnchorPayload, AnchorTransaction } from './types';
+import { SiriusOptions, AnchorPayload } from './types';
+import { of } from 'rxjs';
 
 export class SiriusDriver {
   private blockHttp: BlockHttp;
@@ -74,24 +82,24 @@ export class SiriusDriver {
   }
 
   public async getBlockByHeight(height: number): Promise<BlockInfo> {
-    return new Promise((resolve, reject) => {
-      this.blockHttp.getBlockByHeight(height).subscribe(
-        (bi) => resolve(bi),
-        (err) => reject(err)
-      );
-    });
+    const currentBlock = await this.blockHttp
+      .getBlockByHeight(height)
+      .toPromise();
+    return currentBlock;
   }
 
   public async anchorTransaction(
     payload: AnchorPayload,
     fee: number
   ): Promise<SignedTransaction> {
-    return this.signAndAnnounceTransaction(
+    const tx = await this.signAndAnnounceTransaction(
       JSON.stringify(payload),
       fee,
       this.providerAccount,
       this.recipientPublicAccount
     );
+
+    return tx;
   }
 
   public async signAndAnnounceTransaction(
@@ -100,6 +108,8 @@ export class SiriusDriver {
     sender: Account,
     recipient: PublicAccount
   ): Promise<SignedTransaction> {
+    console.debug(this.providerUrl);
+
     if (!sender) {
       throw new Error('The sender is required');
     }
@@ -116,9 +126,12 @@ export class SiriusDriver {
 
     const message = PlainMessage.create(payload);
     console.debug(`Payload  ${payload}`);
-    const builder = new TransferTransactionBuilder()
+
+    const factory: TransactionBuilderFactory = new TransactionBuilderFactory();
+
+    const builder = factory
+      .transfer()
       .deadline(Deadline.create())
-      .generationHash(generationHash)
       .message(message)
       .networkType(networkType)
       .recipient(recipient.address)
@@ -132,34 +145,39 @@ export class SiriusDriver {
 
     const tx = builder.build();
 
-    const signedTx = sender.sign(tx, generationHash);
+    //const signedTx = sender.sign(tx, generationHash);
+    const signedTx = tx.signWith(sender, generationHash);
     console.debug(`Announing signed tx ${signedTx}`);
     await this.transactionHttp.announce(signedTx).toPromise();
 
     return signedTx;
   }
 
-  public async getTransactions(): Promise<TransferTransaction[]> {
-    return new Promise((resolve, reject) => {
-      this.accountHttp.transactions(this.recipientPublicAccount).subscribe(
-        (txs) =>
-          resolve(
-            txs.filter(
-              (t) => t.type === TransactionType.TRANSFER
-            ) as TransferTransaction[]
-          ),
-        (err) => reject(err)
-      );
-    });
-  }
-
   public async getTransactionBlocks(
     sinceTransactionNumber?: number,
     transactionTimeHash?: string
   ): Promise<TransactionModel[]> {
-    const obTxs = this.accountHttp.transactions(this.recipientPublicAccount);
+    const queryParam = new QueryParams(100);
+    const obTxs = this.accountHttp.transactions(
+      this.recipientPublicAccount,
+      queryParam
+    );
 
     const obATxs = obTxs.pipe(
+      expand((txs) => {
+        if (txs.length === 100) {
+          const newQueryParam = new QueryParams(
+            100,
+            txs[txs.length - 1].transactionInfo?.id
+          );
+          return this.accountHttp.transactions(
+            this.recipientPublicAccount,
+            newQueryParam
+          );
+        } else {
+          return of();
+        }
+      }),
       mergeAll(),
       filter(
         (txs) =>
@@ -227,57 +245,6 @@ export class SiriusDriver {
     } else {
       return obATxs.pipe(toArray()).toPromise();
     }
-  }
-
-  public async getAnchorTransaction(
-    transaction: Transaction
-  ): Promise<AnchorTransaction> {
-    return new Promise((resolve, reject) => {
-      this.blockHttp
-        .getBlockByHeight(transaction.transactionInfo!.height.compact())
-        .subscribe(
-          (bi) => {
-            const at: AnchorTransaction = {
-              transferTransaction: transaction as TransferTransaction,
-              block: bi,
-            };
-            resolve(at);
-          },
-          (err) => reject(err)
-        );
-    });
-  }
-
-  public async getAnchorTransactions(): Promise<TransactionModel[]> {
-    const transferTxs = await this.getTransactions();
-    const atxs: TransactionModel[] = [];
-    transferTxs.forEach(async (t) => {
-      const bl = await this.getBlockByHeight(
-        t.transactionInfo!.height.compact()
-      );
-      const payload: AnchorPayload = JSON.parse(t.message.payload);
-      const anchoredData = {
-        anchorFileHash: payload.hash,
-        numberOfOperations: payload.noOps,
-      };
-      const anchorString = AnchoredDataSerializer.serialize(anchoredData);
-
-      const tm: TransactionModel = {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        transactionNumber: payload.txNumber,
-        transactionTime: bl.timestamp.compact(),
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        transactionHash: t.transactionInfo?.hash as string,
-        transactionTimeHash: bl.hash,
-        anchorString,
-        transactionFeePaid: 0,
-        normalizedTransactionFee: 0,
-        writer: 'writer',
-      };
-      atxs.push(tm);
-    });
-
-    return atxs;
   }
 
   private safeJsonParse(str: string): boolean {

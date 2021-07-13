@@ -49,6 +49,7 @@ export class SiriusLedger implements IBlockchain {
   }
 
   public async write(anchorString: string, fee: number): Promise<void> {
+    console.debug(`Anchor string ${anchorString}`);
     const {
       anchorFileHash,
       numberOfOperations,
@@ -69,7 +70,7 @@ export class SiriusLedger implements IBlockchain {
         `Sirius transaction successful: ${this.driver.providerUrl}/transaction/${tx.hash}`
       );
     } catch (err) {
-      console.error(err.message);
+      console.debug(`Error occured ${err.message}`);
     }
   }
 
